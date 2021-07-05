@@ -55,7 +55,7 @@
         for (NSString* key in self.delegateItems) {
             MKDelegateItem* obj = [self.delegateItems objectForKey:key];
             if ([obj.delegate respondsToSelector:@selector(webSocketClient:didReceiveMessage:)]) {
-                [obj.delegate webSocketClient:self didReceiveMessage:message];
+                [obj.delegate webSocketClient:self didSendMessage:message];
             }
         }
     });
