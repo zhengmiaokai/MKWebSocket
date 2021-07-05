@@ -1,0 +1,471 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B69CE13D0289246907917672 /* libPods-MKWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */; };
+		D5D605BB2692B6AD0006082F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605BA2692B6AD0006082F /* AppDelegate.m */; };
+		D5D605C12692B6AD0006082F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605C02692B6AD0006082F /* ViewController.m */; };
+		D5D605C42692B6AD0006082F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5D605C22692B6AD0006082F /* Main.storyboard */; };
+		D5D605C62692B6B50006082F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5D605C52692B6B50006082F /* Assets.xcassets */; };
+		D5D605C92692B6B50006082F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5D605C72692B6B50006082F /* LaunchScreen.storyboard */; };
+		D5D605CC2692B6B50006082F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605CB2692B6B50006082F /* main.m */; };
+		D5D605D42692B6D60006082F /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5D605D32692B6D60006082F /* ViewController.xib */; };
+		D5D605DF2692C37A0006082F /* MKWebSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605DB2692C37A0006082F /* MKWebSocketClient.m */; };
+		D5D605E02692C37A0006082F /* MKWebSocktDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605DC2692C37A0006082F /* MKWebSocktDelegate.m */; };
+		D5D605E12692C37A0006082F /* MKWebSocketBaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605DD2692C37A0006082F /* MKWebSocketBaseModule.m */; };
+		D5D605E22692C37A0006082F /* MKWebSocketMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605DE2692C37A0006082F /* MKWebSocketMessage.m */; };
+		D5D605F12692C4760006082F /* GCDSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605E82692C4760006082F /* GCDSource.m */; };
+		D5D605F22692C4760006082F /* GCDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605E92692C4760006082F /* GCDQueue.m */; };
+		D5D605F32692C4760006082F /* GCDGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605EA2692C4760006082F /* GCDGroup.m */; };
+		D5D605F42692C4760006082F /* GCDSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605EC2692C4760006082F /* GCDSemaphore.m */; };
+		D5D605F52692C4760006082F /* GCDLock.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605EF2692C4760006082F /* GCDLock.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0FEF992233C6F385B5563E6A /* Pods-MKWebSocket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKWebSocket.release.xcconfig"; path = "Target Support Files/Pods-MKWebSocket/Pods-MKWebSocket.release.xcconfig"; sourceTree = "<group>"; };
+		27A334CB4AEF3ED9B6991D4B /* Pods-MKWebSocket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKWebSocket.debug.xcconfig"; path = "Target Support Files/Pods-MKWebSocket/Pods-MKWebSocket.debug.xcconfig"; sourceTree = "<group>"; };
+		B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MKWebSocket.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5D605B62692B6AD0006082F /* MKWebSocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKWebSocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5D605B92692B6AD0006082F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D5D605BA2692B6AD0006082F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D5D605BF2692B6AD0006082F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		D5D605C02692B6AD0006082F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D5D605C32692B6AD0006082F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D5D605C52692B6B50006082F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D5D605C82692B6B50006082F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D5D605CA2692B6B50006082F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5D605CB2692B6B50006082F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D5D605D32692B6D60006082F /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		D5D605D72692C37A0006082F /* MKWebSocketBaseModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebSocketBaseModule.h; sourceTree = "<group>"; };
+		D5D605D82692C37A0006082F /* MKWebSocktDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebSocktDelegate.h; sourceTree = "<group>"; };
+		D5D605D92692C37A0006082F /* MKWebSocketClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebSocketClient.h; sourceTree = "<group>"; };
+		D5D605DA2692C37A0006082F /* MKWebSocketMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWebSocketMessage.h; sourceTree = "<group>"; };
+		D5D605DB2692C37A0006082F /* MKWebSocketClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebSocketClient.m; sourceTree = "<group>"; };
+		D5D605DC2692C37A0006082F /* MKWebSocktDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebSocktDelegate.m; sourceTree = "<group>"; };
+		D5D605DD2692C37A0006082F /* MKWebSocketBaseModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebSocketBaseModule.m; sourceTree = "<group>"; };
+		D5D605DE2692C37A0006082F /* MKWebSocketMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebSocketMessage.m; sourceTree = "<group>"; };
+		D5D605E62692C4760006082F /* GCDSemaphore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDSemaphore.h; sourceTree = "<group>"; };
+		D5D605E72692C4760006082F /* GCDLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDLock.h; sourceTree = "<group>"; };
+		D5D605E82692C4760006082F /* GCDSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDSource.m; sourceTree = "<group>"; };
+		D5D605E92692C4760006082F /* GCDQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDQueue.m; sourceTree = "<group>"; };
+		D5D605EA2692C4760006082F /* GCDGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDGroup.m; sourceTree = "<group>"; };
+		D5D605EB2692C4760006082F /* GCDConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDConstant.h; sourceTree = "<group>"; };
+		D5D605EC2692C4760006082F /* GCDSemaphore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDSemaphore.m; sourceTree = "<group>"; };
+		D5D605ED2692C4760006082F /* GCDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDQueue.h; sourceTree = "<group>"; };
+		D5D605EE2692C4760006082F /* GCDSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDSource.h; sourceTree = "<group>"; };
+		D5D605EF2692C4760006082F /* GCDLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDLock.m; sourceTree = "<group>"; };
+		D5D605F02692C4760006082F /* GCDGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDGroup.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D5D605B32692B6AD0006082F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B69CE13D0289246907917672 /* libPods-MKWebSocket.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		19DA07BED2DB83D3140A1AF5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5D605AD2692B6AD0006082F = {
+			isa = PBXGroup;
+			children = (
+				D5D605B82692B6AD0006082F /* MKWebSocket */,
+				D5D605B72692B6AD0006082F /* Products */,
+				E707B916AEFA261C33781866 /* Pods */,
+				19DA07BED2DB83D3140A1AF5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D5D605B72692B6AD0006082F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D5D605B62692B6AD0006082F /* MKWebSocket.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D5D605B82692B6AD0006082F /* MKWebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				D5D605B92692B6AD0006082F /* AppDelegate.h */,
+				D5D605BA2692B6AD0006082F /* AppDelegate.m */,
+				D5D605BF2692B6AD0006082F /* ViewController.h */,
+				D5D605C02692B6AD0006082F /* ViewController.m */,
+				D5D605D32692B6D60006082F /* ViewController.xib */,
+				D5D605D62692C37A0006082F /* WebSocket */,
+				D5D605E52692C4760006082F /* GCDObjc */,
+				D5D605C22692B6AD0006082F /* Main.storyboard */,
+				D5D605C52692B6B50006082F /* Assets.xcassets */,
+				D5D605C72692B6B50006082F /* LaunchScreen.storyboard */,
+				D5D605CA2692B6B50006082F /* Info.plist */,
+				D5D605CB2692B6B50006082F /* main.m */,
+			);
+			path = MKWebSocket;
+			sourceTree = "<group>";
+		};
+		D5D605D62692C37A0006082F /* WebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				D5D605D92692C37A0006082F /* MKWebSocketClient.h */,
+				D5D605DB2692C37A0006082F /* MKWebSocketClient.m */,
+				D5D605D82692C37A0006082F /* MKWebSocktDelegate.h */,
+				D5D605DC2692C37A0006082F /* MKWebSocktDelegate.m */,
+				D5D605DA2692C37A0006082F /* MKWebSocketMessage.h */,
+				D5D605DE2692C37A0006082F /* MKWebSocketMessage.m */,
+				D5D605D72692C37A0006082F /* MKWebSocketBaseModule.h */,
+				D5D605DD2692C37A0006082F /* MKWebSocketBaseModule.m */,
+			);
+			path = WebSocket;
+			sourceTree = "<group>";
+		};
+		D5D605E52692C4760006082F /* GCDObjc */ = {
+			isa = PBXGroup;
+			children = (
+				D5D605EB2692C4760006082F /* GCDConstant.h */,
+				D5D605F02692C4760006082F /* GCDGroup.h */,
+				D5D605EA2692C4760006082F /* GCDGroup.m */,
+				D5D605E72692C4760006082F /* GCDLock.h */,
+				D5D605EF2692C4760006082F /* GCDLock.m */,
+				D5D605ED2692C4760006082F /* GCDQueue.h */,
+				D5D605E92692C4760006082F /* GCDQueue.m */,
+				D5D605E62692C4760006082F /* GCDSemaphore.h */,
+				D5D605EC2692C4760006082F /* GCDSemaphore.m */,
+				D5D605EE2692C4760006082F /* GCDSource.h */,
+				D5D605E82692C4760006082F /* GCDSource.m */,
+			);
+			path = GCDObjc;
+			sourceTree = "<group>";
+		};
+		E707B916AEFA261C33781866 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				27A334CB4AEF3ED9B6991D4B /* Pods-MKWebSocket.debug.xcconfig */,
+				0FEF992233C6F385B5563E6A /* Pods-MKWebSocket.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D5D605B52692B6AD0006082F /* MKWebSocket */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5D605CF2692B6B50006082F /* Build configuration list for PBXNativeTarget "MKWebSocket" */;
+			buildPhases = (
+				CB14B9D26D03379204B46548 /* [CP] Check Pods Manifest.lock */,
+				D5D605B22692B6AD0006082F /* Sources */,
+				D5D605B32692B6AD0006082F /* Frameworks */,
+				D5D605B42692B6AD0006082F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MKWebSocket;
+			productName = MKWebSocket;
+			productReference = D5D605B62692B6AD0006082F /* MKWebSocket.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D5D605AE2692B6AD0006082F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					D5D605B52692B6AD0006082F = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = D5D605B12692B6AD0006082F /* Build configuration list for PBXProject "MKWebSocket" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D5D605AD2692B6AD0006082F;
+			productRefGroup = D5D605B72692B6AD0006082F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D5D605B52692B6AD0006082F /* MKWebSocket */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D5D605B42692B6AD0006082F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5D605C92692B6B50006082F /* LaunchScreen.storyboard in Resources */,
+				D5D605C62692B6B50006082F /* Assets.xcassets in Resources */,
+				D5D605D42692B6D60006082F /* ViewController.xib in Resources */,
+				D5D605C42692B6AD0006082F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CB14B9D26D03379204B46548 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MKWebSocket-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D5D605B22692B6AD0006082F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5D605C12692B6AD0006082F /* ViewController.m in Sources */,
+				D5D605DF2692C37A0006082F /* MKWebSocketClient.m in Sources */,
+				D5D605BB2692B6AD0006082F /* AppDelegate.m in Sources */,
+				D5D605E22692C37A0006082F /* MKWebSocketMessage.m in Sources */,
+				D5D605F22692C4760006082F /* GCDQueue.m in Sources */,
+				D5D605CC2692B6B50006082F /* main.m in Sources */,
+				D5D605E12692C37A0006082F /* MKWebSocketBaseModule.m in Sources */,
+				D5D605F32692C4760006082F /* GCDGroup.m in Sources */,
+				D5D605F52692C4760006082F /* GCDLock.m in Sources */,
+				D5D605F12692C4760006082F /* GCDSource.m in Sources */,
+				D5D605E02692C37A0006082F /* MKWebSocktDelegate.m in Sources */,
+				D5D605F42692C4760006082F /* GCDSemaphore.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D5D605C22692B6AD0006082F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D5D605C32692B6AD0006082F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D5D605C72692B6B50006082F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D5D605C82692B6B50006082F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D5D605CD2692B6B50006082F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D5D605CE2692B6B50006082F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D5D605D02692B6B50006082F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27A334CB4AEF3ED9B6991D4B /* Pods-MKWebSocket.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MKWebSocket/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhengmiaokai.MKWebSocket;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		D5D605D12692B6B50006082F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FEF992233C6F385B5563E6A /* Pods-MKWebSocket.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MKWebSocket/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhengmiaokai.MKWebSocket;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D5D605B12692B6AD0006082F /* Build configuration list for PBXProject "MKWebSocket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D605CD2692B6B50006082F /* Debug */,
+				D5D605CE2692B6B50006082F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D5D605CF2692B6B50006082F /* Build configuration list for PBXNativeTarget "MKWebSocket" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D605D02692B6B50006082F /* Debug */,
+				D5D605D12692B6B50006082F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D5D605AE2692B6AD0006082F /* Project object */;
+}
