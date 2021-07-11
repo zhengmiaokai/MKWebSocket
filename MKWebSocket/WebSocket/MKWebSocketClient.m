@@ -123,10 +123,12 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 /// 销毁socket
-- (void)destroySocket {
+- (void)destroySocket:(BOOL)isClose {
     if (_webSocket) {
         _webSocket.delegate = nil;
-        [_webSocket close];
+        if (!isClose) {
+            [_webSocket close];
+        }
         self.webSocket = nil;
     }
     _socketState = SR_CLOSED;
@@ -180,7 +182,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 
 /// 连接（重连前先 销毁已有的websocket）
 - (void)_open {
-    [self destroySocket];
+    [self destroySocket:_socketState == SR_CLOSED];
     [self destroyPingTimer];
     
     _socketState = SR_CONNECTING;
@@ -314,6 +316,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         self.reConnectCount = 0;
         
         [self destroyPingTimer];
+        [self destroySocket:_socketState == SR_CLOSED];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:LCWebSocketDidFailNotification object:error];
     }
@@ -327,12 +330,15 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         _isActiveClose = YES;
         /// 主动断开后销毁Timer
         [self destroyPingTimer];
+        [self destroySocket:_socketState == SR_CLOSED];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:LCWebSocketDidCloseNotification object:@{@"code": @(code), @"reason": (reason?reason:@"")}];
     } else {
         /// 非主动断开，重新连接 （SRStatusCodeTryAgainLater、SRStatusCodeServiceRestart等状态）
         if (self.reachabilityStatus ==AFNetworkReachabilityStatusReachableViaWWAN) {
             [self _open];
+        } else {
+            [self destroySocket:_socketState == SR_CLOSED];
         }
     }
 }
