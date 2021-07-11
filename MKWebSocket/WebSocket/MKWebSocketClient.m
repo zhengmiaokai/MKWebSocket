@@ -315,8 +315,8 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         [self didReciveStatusChanged:MKWebSocketStatusClose];
         self.reConnectCount = 0;
         
-        [self destroyPingTimer];
         [self destroySocket:_socketState == SR_CLOSED];
+        [self destroyPingTimer];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:LCWebSocketDidFailNotification object:error];
     }
@@ -328,9 +328,10 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     
     if (code == SRStatusCodeGoingAway || code == SRStatusCodeNormal) {
         _isActiveClose = YES;
-        /// 主动断开后销毁Timer
-        [self destroyPingTimer];
+        
+        /// 主动断开后销毁 Socket & Timer
         [self destroySocket:_socketState == SR_CLOSED];
+        [self destroyPingTimer];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:LCWebSocketDidCloseNotification object:@{@"code": @(code), @"reason": (reason?reason:@"")}];
     } else {
@@ -339,6 +340,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
             [self _open];
         } else {
             [self destroySocket:_socketState == SR_CLOSED];
+            [self destroyPingTimer];
         }
     }
 }
