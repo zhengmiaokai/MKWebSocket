@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9569B6E9269C94B0008E312D /* MKTestModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9569B6E8269C94B0008E312D /* MKTestModule.m */; };
 		B69CE13D0289246907917672 /* libPods-MKWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */; };
 		D5D605BB2692B6AD0006082F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605BA2692B6AD0006082F /* AppDelegate.m */; };
 		D5D605C12692B6AD0006082F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605C02692B6AD0006082F /* ViewController.m */; };
@@ -29,6 +30,8 @@
 /* Begin PBXFileReference section */
 		0FEF992233C6F385B5563E6A /* Pods-MKWebSocket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKWebSocket.release.xcconfig"; path = "Target Support Files/Pods-MKWebSocket/Pods-MKWebSocket.release.xcconfig"; sourceTree = "<group>"; };
 		27A334CB4AEF3ED9B6991D4B /* Pods-MKWebSocket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKWebSocket.debug.xcconfig"; path = "Target Support Files/Pods-MKWebSocket/Pods-MKWebSocket.debug.xcconfig"; sourceTree = "<group>"; };
+		9569B6E7269C94B0008E312D /* MKTestModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKTestModule.h; sourceTree = "<group>"; };
+		9569B6E8269C94B0008E312D /* MKTestModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKTestModule.m; sourceTree = "<group>"; };
 		B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MKWebSocket.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D605B62692B6AD0006082F /* MKWebSocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKWebSocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D605B92692B6AD0006082F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,6 +108,8 @@
 			children = (
 				D5D605B92692B6AD0006082F /* AppDelegate.h */,
 				D5D605BA2692B6AD0006082F /* AppDelegate.m */,
+				9569B6E7269C94B0008E312D /* MKTestModule.h */,
+				9569B6E8269C94B0008E312D /* MKTestModule.m */,
 				D5D605BF2692B6AD0006082F /* ViewController.h */,
 				D5D605C02692B6AD0006082F /* ViewController.m */,
 				D5D605D32692B6D60006082F /* ViewController.xib */,
@@ -264,6 +269,7 @@
 				D5D605F22692C4760006082F /* GCDQueue.m in Sources */,
 				D5D605CC2692B6B50006082F /* main.m in Sources */,
 				D5D605E12692C37A0006082F /* MKWebSocketBaseModule.m in Sources */,
+				9569B6E9269C94B0008E312D /* MKTestModule.m in Sources */,
 				D5D605F32692C4760006082F /* GCDGroup.m in Sources */,
 				D5D605F52692C4760006082F /* GCDLock.m in Sources */,
 				D5D605F12692C4760006082F /* GCDSource.m in Sources */,

@@ -8,9 +8,9 @@
 #import "ViewController.h"
 #import "MKWebSocketClient.h"
 #import "MKWebSocketMessage.h"
-#import "MKWebSocketBaseModule.h"
+#import "MKTestModule.h"
 
-@interface ViewController () <MKWebSocketClientDelegate>
+@interface ViewController () <MKTestModuleProtocol>
 
 @end
 
@@ -21,7 +21,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     
-    [SOCKET_MODULE(MKWebSocketBaseModule) addDelegate:self]; /// 注册子模块，暂时未使用子模块
+    [SOCKET_MODULE(MKTestModule) addDelegate:self]; /// 注册子模块
     // [[MKWebSocketClient sharedInstance] addDelegate:self];
     
     _connectBtn.enabled = YES;
@@ -92,6 +92,10 @@
 - (void)webSocketClient:(id)webSocketClient didSendMessage:(MKWebSocketMessage *)message {
     self.contentTV.text = [NSString stringWithFormat:@"%@\n\n客户端：%@", self.contentTV.text, message.message];
     [self scollToBottom];
+}
+
+- (void)refreshOrder:(id)data {
+    
 }
 
 @end
