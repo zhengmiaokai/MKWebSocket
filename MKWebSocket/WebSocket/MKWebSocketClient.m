@@ -14,10 +14,11 @@
 /* websocket在线测试：http://coolaf.com/tool/chattest */
 static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchattest";
 
-#define MAX_REPEAT_CONNECT_NUMBER         2
-#define MAX_SOCKET_PING_NUMBER            1
-#define SOCKET_PING_TIME_INTERVAL        15
-#define SOCKET_FAIL_RECONNECT_INTERVAL   30
+#define MAX_REPEAT_CONNECT_NUMBER         2   // 失败立即重连次数
+#define REPEAT_CONNECT_INTERVAL           3   // 失败立即重连间隔
+#define MAX_SOCKET_PING_NUMBER            1   // Ping-Pong异常次数
+#define SOCKET_PING_TIME_INTERVAL        15   // Ping心跳间隔
+#define SOCKET_FAIL_RECONNECT_INTERVAL   30   // 链接心跳间隔
 
 @interface MKWebSocketClient () <SRWebSocketDelegate>
 {
@@ -28,6 +29,8 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     BOOL _isFirstTime;   /// 是否为首次连接
     BOOL _isActiveClose; /// 是否为主动关闭
 }
+@property (nonatomic, assign) SRReadyState socketState;
+
 @property (nonatomic, strong) GCDSource* conntectTimer; /// 链接心跳定时
 @property (nonatomic, strong) GCDSource* pingTimer; /// ping心跳定时
 @property (nonatomic, strong) SRWebSocket* webSocket;
@@ -62,7 +65,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         self.reConnectCount = 0;
         self.delegateItems = [[NSMutableDictionary alloc] init];
         
-        _socketState = SR_CLOSED;
+        self.socketState = SR_CLOSED;
         _modules = [[NSMutableDictionary alloc] init];
         _lock = [[NSRecursiveLock alloc] init];
         
@@ -131,7 +134,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         }
         self.webSocket = nil;
     }
-    _socketState = SR_CLOSED;
+    self.socketState = SR_CLOSED;
 }
 
 /// 销毁PingTimer
@@ -174,7 +177,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 - (void)disconnect {
-    _socketState = SR_CLOSING;
+    self.socketState = SR_CLOSING;
     [self.webSocket close];
     
     [self destroyConntectTimer];
@@ -185,7 +188,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     [self destroySocket:_socketState == SR_CLOSED];
     [self destroyPingTimer];
     
-    _socketState = SR_CONNECTING;
+    self.socketState = SR_CONNECTING;
     [self didReciveStatusChanged:MKWebSocketStatusConnecting];
     [self.webSocket open];
     
@@ -291,7 +294,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
     self.reConnectCount = 0;
-    _socketState = SR_OPEN;
+    self.socketState = SR_OPEN;
     
     /// ping心跳包，防止服务端杀死
     __weak typeof(self) weakSelf = self;
@@ -306,10 +309,13 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
-    _socketState = SR_CLOSED;
+    self.socketState = SR_CLOSED;
     /// 断开重连3次，重连失败再走下方代理
     if (self.reConnectCount < MAX_REPEAT_CONNECT_NUMBER && self.reachabilityStatus ==AFNetworkReachabilityStatusReachableViaWWAN) {
-        [self _open];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(REPEAT_CONNECT_INTERVAL * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            //延后三秒重连
+            [self _open];
+        });
         self.reConnectCount ++;
     } else {
         [self didReciveStatusChanged:MKWebSocketStatusClose];
@@ -323,7 +329,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
-    _socketState = SR_CLOSED;
+    self.socketState = SR_CLOSED;
     [self didReciveStatusChanged:MKWebSocketStatusClose];
     
     if (code == SRStatusCodeGoingAway || code == SRStatusCodeNormal) {
@@ -337,7 +343,10 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     } else {
         /// 非主动断开，重新连接 （SRStatusCodeTryAgainLater、SRStatusCodeServiceRestart等状态）
         if (self.reachabilityStatus ==AFNetworkReachabilityStatusReachableViaWWAN) {
-            [self _open];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(REPEAT_CONNECT_INTERVAL * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //延后三秒重连
+                [self _open];
+            });
         } else {
             [self destroySocket:_socketState == SR_CLOSED];
             [self destroyPingTimer];

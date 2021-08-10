@@ -12,8 +12,6 @@
 
 @interface MKWebSocketClient : NSObject
 
-@property (nonatomic, assign, readonly) SRReadyState socketState;
-
 @property (nonatomic, copy) NSString* serverLink;
 @property (nonatomic, strong) NSURLRequest* serverRequest;
 
@@ -36,4 +34,4 @@
 @end
 
 #define SOCKET_MODULE(cls)         ((cls*)[[MKWebSocketClient sharedInstance] socketModule:@#cls])
-#define REMOVE_SOCKET_MODULE(cls)  ((cls*)[[MKWebSocketClient sharedInstance] removeSocketModule:@#cls])
+#define REMOVE_SOCKET_MODULE(cls)  [[MKWebSocketClient sharedInstance] removeSocketModule:@#cls]
