@@ -32,6 +32,7 @@
 - (IBAction)connect:(UIButton *)sender {
     if (_adressTF.text.length) {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_adressTF.text]];
+        request.timeoutInterval = 25;
         [request setValue:@"" forHTTPHeaderField:@"Cookie"];
         
         [MKWebSocketClient sharedInstance].serverRequest = request;
