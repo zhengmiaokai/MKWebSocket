@@ -235,6 +235,14 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 #pragma mark - 代理扩展 -
+- (NSDictionary *)getDelegateItems {
+    NSDictionary* delegateItems = nil;
+    @synchronized (self) {
+       delegateItems = [_delegateItems copy];
+    }
+    return delegateItems;
+}
+
 - (NSString *)addDelegate:(id<MKWebSocketClientDelegate>)delegate {
     MKDelegateItem* delegateItem = [[MKDelegateItem alloc] initWithDelegate:delegate];
     @synchronized (self) {
@@ -277,13 +285,9 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 - (void)didReciveStatusChanged:(MKWebSocketStatus)status {
-    NSDictionary* delegateItems = nil;
-    @synchronized (self) {
-       delegateItems = [_delegateItems copy];
-    }
-    
+    NSDictionary* delegateItems = [self getDelegateItems];
     for (NSString* key in delegateItems) {
-        MKDelegateItem* obj = [_delegateItems objectForKey:key];
+        MKDelegateItem* obj = [delegateItems objectForKey:key];
         if ([obj.delegate respondsToSelector:@selector(webSocketClient:didReciveStatusChanged:)]) {
             [obj.delegate webSocketClient:self didReciveStatusChanged:status];
         }
@@ -294,14 +298,9 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 /* 基础代码处理 */
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
     MKWebSocketMessage* messageItem = [MKWebSocketMessage modelWithMessage:message];
-    
-    NSDictionary* delegateItems = nil;
-    @synchronized (self) {
-       delegateItems = [_delegateItems copy];
-    }
-
+    NSDictionary* delegateItems = [self getDelegateItems];
     for (NSString* key in delegateItems) {
-        MKDelegateItem* obj = [_delegateItems objectForKey:key];
+        MKDelegateItem* obj = [delegateItems objectForKey:key];
         if ([obj.delegate respondsToSelector:@selector(webSocketClient:didReceiveMessage:)]) {
             [obj.delegate webSocketClient:self didReceiveMessage:messageItem];
         }
