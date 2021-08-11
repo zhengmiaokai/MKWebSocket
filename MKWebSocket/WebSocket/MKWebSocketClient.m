@@ -156,6 +156,8 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 
 #pragma mark - 连接 & 断开 -
 - (void)connect {
+    _isFirstTime = NO;
+    _isActiveClose = NO;
     [self _open];
 
     /// 链接心跳包
@@ -177,23 +179,24 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 - (void)disconnect {
-    self.socketState = SR_CLOSING;
-    [self.webSocket close];
-    
-    [self destroyConntectTimer];
+    _isActiveClose = YES;
+    dispatch_async(_serailQueue, ^{
+        self.socketState = SR_CLOSING;
+        [self.webSocket close];
+        [self destroyConntectTimer];
+    });
 }
 
 /// 连接（重连前先 销毁已有的websocket）
 - (void)_open {
-    [self destroySocket:_socketState == SR_CLOSED];
-    [self destroyPingTimer];
-    
-    self.socketState = SR_CONNECTING;
-    [self didReciveStatusChanged:MKWebSocketStatusConnecting];
-    [self.webSocket open];
-    
-    _isFirstTime = NO;
-    _isActiveClose = NO;
+    dispatch_async(_serailQueue, ^{
+        [self destroySocket:self.socketState == SR_CLOSED];
+        [self destroyPingTimer];
+        
+        self.socketState = SR_CONNECTING;
+        [self didReciveStatusChanged:MKWebSocketStatusConnecting];
+        [self.webSocket open];
+    });
 }
 
 #pragma mark - sendData -
@@ -234,12 +237,16 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 #pragma mark - 代理扩展 -
 - (NSString *)addDelegate:(id<MKWebSocketClientDelegate>)delegate {
     MKDelegateItem* delegateItem = [[MKDelegateItem alloc] initWithDelegate:delegate];
-    [self.delegateItems setValue:delegateItem forKey:delegateItem.delegateTag];
+    @synchronized (self) {
+        [self.delegateItems setValue:delegateItem forKey:delegateItem.delegateTag];
+    }
     return delegateItem.delegateTag;
 }
 
 - (void)removeDelegateWithTag:(NSString *)tag {
-    [self.delegateItems removeObjectForKey:tag];
+    @synchronized (self) {
+        [self.delegateItems removeObjectForKey:tag];
+    }
 }
 
 - (id)socketModule:(NSString *)cls {
@@ -270,7 +277,12 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 - (void)didReciveStatusChanged:(MKWebSocketStatus)status {
-    for (NSString* key in _delegateItems) {
+    NSDictionary* delegateItems = nil;
+    @synchronized (self) {
+       delegateItems = [_delegateItems copy];
+    }
+    
+    for (NSString* key in delegateItems) {
         MKDelegateItem* obj = [_delegateItems objectForKey:key];
         if ([obj.delegate respondsToSelector:@selector(webSocketClient:didReciveStatusChanged:)]) {
             [obj.delegate webSocketClient:self didReciveStatusChanged:status];
@@ -283,7 +295,12 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
     MKWebSocketMessage* messageItem = [MKWebSocketMessage modelWithMessage:message];
     
-    for (NSString* key in _delegateItems) {
+    NSDictionary* delegateItems = nil;
+    @synchronized (self) {
+       delegateItems = [_delegateItems copy];
+    }
+
+    for (NSString* key in delegateItems) {
         MKDelegateItem* obj = [_delegateItems objectForKey:key];
         if ([obj.delegate respondsToSelector:@selector(webSocketClient:didReceiveMessage:)]) {
             [obj.delegate webSocketClient:self didReceiveMessage:messageItem];
@@ -333,8 +350,6 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     [self didReciveStatusChanged:MKWebSocketStatusClose];
     
     if (code == SRStatusCodeGoingAway || code == SRStatusCodeNormal) {
-        _isActiveClose = YES;
-        
         /// 主动断开后销毁 Socket & Timer
         [self destroySocket:_socketState == SR_CLOSED];
         [self destroyPingTimer];
