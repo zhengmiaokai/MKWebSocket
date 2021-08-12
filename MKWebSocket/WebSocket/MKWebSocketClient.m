@@ -205,8 +205,9 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         [self.webSocket send:data];
         
         MKWebSocketMessage* messageItem = [MKWebSocketMessage modelWithMessage:data];
-        for (NSString* key in _delegateItems) {
-            MKDelegateItem* obj = [_delegateItems objectForKey:key];
+        NSDictionary* delegateItems = [self getDelegateItems];
+        for (NSString* key in delegateItems) {
+            MKDelegateItem* obj = [delegateItems objectForKey:key];
             if ([obj.delegate respondsToSelector:@selector(webSocketClient:didSendMessage:)]) {
                 [obj.delegate webSocketClient:self didSendMessage:messageItem];
             }

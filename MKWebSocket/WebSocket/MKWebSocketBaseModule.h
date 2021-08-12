@@ -13,7 +13,7 @@
 
 @interface MKWebSocketBaseModule : NSObject <MKWebSocketClientDelegate>
 
-@property (nonatomic, strong, readonly) NSMutableDictionary* delegateItems;
+- (NSDictionary *)getDelegateItems;
 
 - (void)addDelegate:(id<MKWebSocketClientDelegate>)delegate;
 

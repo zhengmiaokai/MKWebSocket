@@ -15,8 +15,9 @@
     NSString* type = [data objectForKey:@"type"];
     if (type.intValue == 7) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            for (NSString* key in self.delegateItems) {
-                MKDelegateItem* obj = [self.delegateItems objectForKey:key];
+            NSDictionary* delegateItems = [self getDelegateItems];
+            for (NSString* key in delegateItems) {
+                MKDelegateItem* obj = [delegateItems objectForKey:key];
                 if ([obj.delegate respondsToSelector:@selector(refreshOrder:)]) {
                     [(id <MKTestModuleProtocol>)obj.delegate refreshOrder:message];
                 }
