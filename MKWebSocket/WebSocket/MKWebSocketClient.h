@@ -12,6 +12,9 @@
 
 @interface MKWebSocketClient : NSObject
 
+// 用于确认ping-pong是否正常，属于测试数据
+@property (nonatomic, strong, readonly) NSMutableArray* pingDatas;
+
 @property (nonatomic, copy) NSString* serverLink;
 @property (nonatomic, strong) NSURLRequest* serverRequest;
 

@@ -9,6 +9,7 @@
 #import "MKWebSocketClient.h"
 #import "MKWebSocketMessage.h"
 #import "GCDSource.h"
+#import "NSDate+Additions.h"
 #import <AFNetworking/AFNetworking.h>
 
 /* websocket在线测试：http://coolaf.com/tool/chattest */
@@ -62,6 +63,8 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _pingDatas = [[NSMutableArray alloc] init];
+        
         self.reConnectCount = 0;
         self.delegateItems = [[NSMutableDictionary alloc] init];
         
@@ -306,7 +309,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
             [obj.delegate webSocketClient:self didReceiveMessage:messageItem];
         }
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:LCWebSocketDidReciveNotification object:messageItem];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketDidReciveNotification object:messageItem];
 }
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
@@ -322,7 +325,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     
     /// 登录标记（临时）
     [self didReciveStatusChanged:MKWebSocketStatusOpen];
-    [[NSNotificationCenter defaultCenter] postNotificationName:LCWebSocketDidOpenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketDidOpenNotification object:nil];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
@@ -341,7 +344,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         [self destroySocket:_socketState == SR_CLOSED];
         [self destroyPingTimer];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:LCWebSocketDidFailNotification object:error];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketDidFailNotification object:error];
     }
 }
 
@@ -354,7 +357,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         [self destroySocket:_socketState == SR_CLOSED];
         [self destroyPingTimer];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:LCWebSocketDidCloseNotification object:@{@"code": @(code), @"reason": (reason?reason:@"")}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketDidCloseNotification object:@{@"code": @(code), @"reason": (reason?reason:@"")}];
     } else {
         /// 非主动断开，重新连接 （SRStatusCodeTryAgainLater、SRStatusCodeServiceRestart等状态）
         if (self.reachabilityStatus ==AFNetworkReachabilityStatusReachableViaWWAN) {
@@ -372,10 +375,16 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 - (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)pongPayload {
     self.pingMQ = 0; /// 归零，链路正常
     NSLog(@"接收到server返回的pong");
+    
+    NSString* homeTime = [NSDate dateToString:[NSDate date] withDateFormat:@"HH:mm:ss"];
+    [self.pingDatas insertObject:[NSString stringWithFormat:@"%@: 接收到server返回的pong", homeTime] atIndex:0];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketPingNotification object:nil];
 }
 
 - (BOOL)webSocketShouldConvertTextFrameToString:(SRWebSocket *)webSocket {
     return YES;
 }
+
+
 
 @end

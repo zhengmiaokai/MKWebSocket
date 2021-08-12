@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9569B6E9269C94B0008E312D /* MKTestModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9569B6E8269C94B0008E312D /* MKTestModule.m */; };
 		B69CE13D0289246907917672 /* libPods-MKWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */; };
+		D5CF012F26C51B6D0037CEF8 /* MKWSPingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D5CF012D26C51B6D0037CEF8 /* MKWSPingVC.m */; };
+		D5CF013426C51C8B0037CEF8 /* NSDate+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = D5CF013326C51C8B0037CEF8 /* NSDate+Additions.m */; };
 		D5D605BB2692B6AD0006082F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605BA2692B6AD0006082F /* AppDelegate.m */; };
 		D5D605C12692B6AD0006082F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605C02692B6AD0006082F /* ViewController.m */; };
 		D5D605C42692B6AD0006082F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5D605C22692B6AD0006082F /* Main.storyboard */; };
@@ -33,6 +35,10 @@
 		9569B6E7269C94B0008E312D /* MKTestModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKTestModule.h; sourceTree = "<group>"; };
 		9569B6E8269C94B0008E312D /* MKTestModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKTestModule.m; sourceTree = "<group>"; };
 		B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MKWebSocket.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5CF012D26C51B6D0037CEF8 /* MKWSPingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWSPingVC.m; sourceTree = "<group>"; };
+		D5CF012E26C51B6D0037CEF8 /* MKWSPingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWSPingVC.h; sourceTree = "<group>"; };
+		D5CF013226C51C8B0037CEF8 /* NSDate+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Additions.h"; sourceTree = "<group>"; };
+		D5CF013326C51C8B0037CEF8 /* NSDate+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Additions.m"; sourceTree = "<group>"; };
 		D5D605B62692B6AD0006082F /* MKWebSocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKWebSocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5D605B92692B6AD0006082F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D5D605BA2692B6AD0006082F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -85,6 +91,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D5CF013626C51CC70037CEF8 /* Catogery */ = {
+			isa = PBXGroup;
+			children = (
+				D5CF013226C51C8B0037CEF8 /* NSDate+Additions.h */,
+				D5CF013326C51C8B0037CEF8 /* NSDate+Additions.m */,
+			);
+			path = Catogery;
+			sourceTree = "<group>";
+		};
 		D5D605AD2692B6AD0006082F = {
 			isa = PBXGroup;
 			children = (
@@ -113,7 +128,10 @@
 				D5D605BF2692B6AD0006082F /* ViewController.h */,
 				D5D605C02692B6AD0006082F /* ViewController.m */,
 				D5D605D32692B6D60006082F /* ViewController.xib */,
+				D5CF012E26C51B6D0037CEF8 /* MKWSPingVC.h */,
+				D5CF012D26C51B6D0037CEF8 /* MKWSPingVC.m */,
 				D5D605D62692C37A0006082F /* WebSocket */,
+				D5CF013626C51CC70037CEF8 /* Catogery */,
 				D5D605E52692C4760006082F /* GCDObjc */,
 				D5D605C22692B6AD0006082F /* Main.storyboard */,
 				D5D605C52692B6B50006082F /* Assets.xcassets */,
@@ -262,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5CF013426C51C8B0037CEF8 /* NSDate+Additions.m in Sources */,
 				D5D605C12692B6AD0006082F /* ViewController.m in Sources */,
 				D5D605DF2692C37A0006082F /* MKWebSocketClient.m in Sources */,
 				D5D605BB2692B6AD0006082F /* AppDelegate.m in Sources */,
@@ -269,6 +288,7 @@
 				D5D605F22692C4760006082F /* GCDQueue.m in Sources */,
 				D5D605CC2692B6B50006082F /* main.m in Sources */,
 				D5D605E12692C37A0006082F /* MKWebSocketBaseModule.m in Sources */,
+				D5CF012F26C51B6D0037CEF8 /* MKWSPingVC.m in Sources */,
 				9569B6E9269C94B0008E312D /* MKTestModule.m in Sources */,
 				D5D605F32692C4760006082F /* GCDGroup.m in Sources */,
 				D5D605F52692C4760006082F /* GCDLock.m in Sources */,

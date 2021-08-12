@@ -9,6 +9,7 @@
 #import "MKWebSocketClient.h"
 #import "MKWebSocketMessage.h"
 #import "MKTestModule.h"
+#import "MKWSPingVC.h"
 
 @interface ViewController () <MKTestModuleProtocol>
 
@@ -25,6 +26,7 @@
     // [[MKWebSocketClient sharedInstance] addDelegate:self];
     
     _connectBtn.enabled = YES;
+    _pingBtn.enabled = NO;
     _sendBtn.enabled = NO;
     _closeBtn.enabled = NO;
 }
@@ -55,6 +57,11 @@
     [self.contentTV setContentOffset:CGPointZero];
 }
 
+- (IBAction)jumpPingVC:(UIButton *)sender {
+    MKWSPingVC* pingVC  = [[MKWSPingVC alloc] init];
+    [self.navigationController pushViewController:pingVC animated:YES];
+}
+
 - (void)scollToBottom {
     if (self.contentTV.contentSize.height > self.contentTV.frame.size.height) {
         [self.contentTV setContentOffset:CGPointMake(0, self.contentTV.contentSize.height - self.contentTV.frame.size.height) animated:YES];
@@ -72,10 +79,12 @@
         self.contentTV.text = [NSString stringWithFormat:@"%@\n\n%@", self.contentTV.text, @"已连接对应的服务。。。"];
         [self scollToBottom];
         
+        self.pingBtn.enabled = YES;
         self.sendBtn.enabled = YES;
         self.closeBtn.enabled = YES;
         self.connectBtn.enabled = NO;
     } else {
+        self.pingBtn.enabled = NO;
         self.sendBtn.enabled = NO;
         self.closeBtn.enabled = NO;
         self.connectBtn.enabled = YES;

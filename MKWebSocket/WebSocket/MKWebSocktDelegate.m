@@ -8,10 +8,12 @@
 
 #import "MKWebSocktDelegate.h"
 
-NSString * const LCWebSocketDidOpenNotification = @"webSocketDidOpenNotification";
-NSString * const LCWebSocketDidCloseNotification = @"webSocketDidCloseNotification";
-NSString * const LCWebSocketDidFailNotification = @"webSocketDidFailNotification";
-NSString * const LCWebSocketDidReciveNotification = @"webSocketDidReciveNotification";
+NSString * const MKWebSocketDidOpenNotification = @"webSocketDidOpenNotification";
+NSString * const MKWebSocketDidCloseNotification = @"webSocketDidCloseNotification";
+NSString * const MKWebSocketDidFailNotification = @"webSocketDidFailNotification";
+NSString * const MKWebSocketDidReciveNotification = @"webSocketDidReciveNotification";
+
+NSString * const MKWebSocketPingNotification = @"webSocketPingNotification";
 
 @implementation MKDelegateItem
 

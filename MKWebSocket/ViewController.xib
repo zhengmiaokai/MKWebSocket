@@ -17,6 +17,7 @@
                 <outlet property="connectBtn" destination="Ffq-ap-XPE" id="SGX-jg-fhZ"/>
                 <outlet property="contentTF" destination="QPM-DM-amT" id="vnF-Dx-FPX"/>
                 <outlet property="contentTV" destination="jZh-bs-Y6w" id="dfS-YK-QNc"/>
+                <outlet property="pingBtn" destination="Yxs-37-VuJ" id="jmx-ce-va8"/>
                 <outlet property="sendBtn" destination="ERq-50-hkR" id="RbK-J0-WIG"/>
                 <outlet property="view" destination="HDG-sO-Hez" id="Rjd-lo-cdP"/>
             </connections>
@@ -89,6 +90,13 @@
                         <action selector="send:" destination="-1" eventType="touchUpInside" id="V6L-co-znn"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yxs-37-VuJ">
+                    <rect key="frame" x="189.5" y="165" width="31" height="30"/>
+                    <state key="normal" title="心跳"/>
+                    <connections>
+                        <action selector="jumpPingVC:" destination="-1" eventType="touchUpInside" id="rJy-aS-nkU"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="9d6-yz-9tD"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -99,6 +107,7 @@
                 <constraint firstItem="9d6-yz-9tD" firstAttribute="trailing" secondItem="QPM-DM-amT" secondAttribute="trailing" constant="45" id="BAU-fb-tCl"/>
                 <constraint firstItem="FYC-y6-ZFQ" firstAttribute="leading" secondItem="9d6-yz-9tD" secondAttribute="leading" constant="41" id="FPH-2C-9CK"/>
                 <constraint firstItem="9d6-yz-9tD" firstAttribute="trailing" secondItem="jZh-bs-Y6w" secondAttribute="trailing" constant="30" id="HHd-pY-VH6"/>
+                <constraint firstItem="Yxs-37-VuJ" firstAttribute="top" secondItem="FYC-y6-ZFQ" secondAttribute="bottom" constant="15" id="OOK-rQ-9pv"/>
                 <constraint firstItem="tSb-56-U5I" firstAttribute="top" secondItem="FYC-y6-ZFQ" secondAttribute="bottom" constant="15" id="OjD-jq-v6Z"/>
                 <constraint firstItem="9d6-yz-9tD" firstAttribute="trailing" secondItem="KZk-8m-7Vg" secondAttribute="trailing" constant="52" id="Ou8-KY-wWB"/>
                 <constraint firstItem="Ffq-ap-XPE" firstAttribute="leading" secondItem="9d6-yz-9tD" secondAttribute="leading" constant="41" id="PwL-kt-ce3"/>
@@ -109,10 +118,11 @@
                 <constraint firstItem="9d6-yz-9tD" firstAttribute="trailing" secondItem="FYC-y6-ZFQ" secondAttribute="trailing" constant="45" id="gcr-7V-IvL"/>
                 <constraint firstItem="QPM-DM-amT" firstAttribute="top" secondItem="Ffq-ap-XPE" secondAttribute="bottom" constant="40" id="ger-vF-LER"/>
                 <constraint firstItem="9d6-yz-9tD" firstAttribute="trailing" secondItem="tSb-56-U5I" secondAttribute="trailing" constant="45" id="hjr-wF-WJP"/>
+                <constraint firstItem="Yxs-37-VuJ" firstAttribute="centerX" secondItem="FYC-y6-ZFQ" secondAttribute="centerX" id="km2-YW-SaA"/>
                 <constraint firstItem="Ffq-ap-XPE" firstAttribute="top" secondItem="FYC-y6-ZFQ" secondAttribute="bottom" constant="15" id="utW-pi-d3d"/>
                 <constraint firstItem="jZh-bs-Y6w" firstAttribute="leading" secondItem="9d6-yz-9tD" secondAttribute="leading" constant="31" id="zY7-gr-9ji"/>
             </constraints>
-            <point key="canvasLocation" x="-588" y="-95"/>
+            <point key="canvasLocation" x="-588.40579710144937" y="-95.089285714285708"/>
         </view>
     </objects>
     <resources>

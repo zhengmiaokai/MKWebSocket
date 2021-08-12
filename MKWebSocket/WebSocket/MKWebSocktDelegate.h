@@ -8,10 +8,12 @@
 
 #import "SocketRocket.h"
 
-extern NSString * const LCWebSocketDidOpenNotification;
-extern NSString * const LCWebSocketDidCloseNotification;
-extern NSString * const LCWebSocketDidFailNotification;
-extern NSString * const LCWebSocketDidReciveNotification;
+extern NSString * const MKWebSocketDidOpenNotification;
+extern NSString * const MKWebSocketDidCloseNotification;
+extern NSString * const MKWebSocketDidFailNotification;
+extern NSString * const MKWebSocketDidReciveNotification;
+
+extern NSString * const MKWebSocketPingNotification;
 
 typedef NS_ENUM(NSInteger, MKWebSocketStatus) {
     MKWebSocketStatusOpen           = 1,  /// 连接成功

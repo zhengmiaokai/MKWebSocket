@@ -11,6 +11,7 @@
 
 @property (weak, nonatomic) IBOutlet  UITextField* adressTF;
 @property (weak, nonatomic) IBOutlet  UIButton* connectBtn;
+@property (weak, nonatomic) IBOutlet  UIButton* pingBtn;
 @property (weak, nonatomic) IBOutlet  UIButton* closeBtn;
 
 @property (weak, nonatomic) IBOutlet  UITextField* contentTF;
@@ -23,5 +24,6 @@
 - (IBAction)close:(UIButton *)sender;
 - (IBAction)send:(UIButton *)sender;
 - (IBAction)clean:(UIButton *)sender;
+- (IBAction)jumpPingVC:(UIButton *)sender;
 
 @end
