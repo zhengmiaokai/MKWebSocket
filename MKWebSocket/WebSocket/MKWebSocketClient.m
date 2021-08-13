@@ -232,7 +232,9 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     }
     
     if (_socketState == SR_OPEN) {
-        data = [NSData data]; /// 空数据
+        if (!data) {
+            data = [@"SocketTag" dataUsingEncoding:NSASCIIStringEncoding];
+        }
         [self.webSocket sendPing:data];
         self.pingMQ++;
     }
@@ -373,18 +375,19 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)pongPayload {
-    self.pingMQ = 0; /// 归零，链路正常
-    NSLog(@"接收到server返回的pong");
-    
-    NSString* homeTime = [NSDate dateToString:[NSDate date] withDateFormat:@"HH:mm:ss"];
-    [self.pingDatas insertObject:[NSString stringWithFormat:@"%@: 接收到server返回的pong", homeTime] atIndex:0];
-    [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketPingNotification object:nil];
+    NSString* pongTag = [[NSString alloc] initWithData:pongPayload encoding:NSASCIIStringEncoding];
+    if ([pongTag isEqualToString:@"SocketTag"]) {
+        self.pingMQ = 0; /// 归零，链路正常
+        NSLog(@"接收到server返回的pong");
+        
+        NSString* homeTime = [NSDate dateToString:[NSDate date] withDateFormat:@"HH:mm:ss"];
+        [self.pingDatas insertObject:[NSString stringWithFormat:@"%@: 接收到server返回的pong", homeTime] atIndex:0];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketPingNotification object:nil];
+    }
 }
 
 - (BOOL)webSocketShouldConvertTextFrameToString:(SRWebSocket *)webSocket {
     return YES;
 }
-
-
 
 @end
