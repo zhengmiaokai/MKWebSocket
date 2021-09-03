@@ -30,8 +30,8 @@
     self = [super init];
     if (self) {
         _timeInterval = timeInterval;
+        _repeats = repeats;
         
-        = repeats;
         self.timerBlock = timerBlock;
         self.timerQueue = timerQueue;
         self.blockQueue = blockQueue;
