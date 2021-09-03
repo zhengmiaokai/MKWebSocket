@@ -11,6 +11,8 @@
 @interface GCDSource () {
     BOOL _repeats;
     NSTimeInterval _timeInterval;
+    BOOL _isSuspend; // 是否挂起
+    NSRecursiveLock* _lock;
 }
 
 @property (nonatomic, strong) dispatch_source_t timer;
@@ -28,7 +30,8 @@
     self = [super init];
     if (self) {
         _timeInterval = timeInterval;
-        _repeats = repeats;
+        
+        = repeats;
         self.timerBlock = timerBlock;
         self.timerQueue = timerQueue;
         self.blockQueue = blockQueue;
@@ -68,25 +71,37 @@
         }
     });
     dispatch_resume(_timer);
+    _isSuspend = NO;
 }
 
 - (void)pauseTimer {
-    if(self.timer){
+    [_lock lock];
+    if(self.timer && _isSuspend == NO){
         dispatch_suspend(_timer);
+        _isSuspend = YES;
     }
+    [_lock unlock];
 }
 
 - (void)resumeTimer {
-    if(self.timer){
+    [_lock lock];
+    if(self.timer && _isSuspend == YES){
         dispatch_resume(_timer);
+        _isSuspend = NO;
     }
+    [_lock unlock];
 }
 
 - (void)stopTimer {
+    [_lock lock];
     if(self.timer){
+        if (_isSuspend == YES) {
+            [self resumeTimer];
+        }
         dispatch_source_cancel(_timer);
         _timer = nil;
     }
+    [_lock unlock];
 }
 
 - (void)dealloc {
