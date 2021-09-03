@@ -18,11 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 
-- (void)pauseTimer;
+- (void)pauseTimer; // 挂起与恢复必须平衡，不然会crash
 
 - (void)resumeTimer;
 
-- (void)stopTimer;
+- (void)stopTimer; // 不能在挂起的状态cancel，需要恢复定时器再cancel
 
 @end
 
