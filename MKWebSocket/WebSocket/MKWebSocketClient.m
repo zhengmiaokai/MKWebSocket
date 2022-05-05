@@ -8,7 +8,7 @@
 
 #import "MKWebSocketClient.h"
 #import "MKWebSocketMessage.h"
-#import "GCDSource.h"
+#import "GCDConstant.h"
 #import "NSDate+Additions.h"
 #import <AFNetworking/AFNetworking.h>
 
@@ -25,6 +25,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 {
     dispatch_queue_t _serailQueue;
     NSRecursiveLock* _lock;
+    GCDSemaphore* _semaphore;
     NSMutableDictionary* _modules;
     
     BOOL _isFirstTime;   /// 是否为首次连接
@@ -71,6 +72,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         self.socketState = SR_CLOSED;
         _modules = [[NSMutableDictionary alloc] init];
         _lock = [[NSRecursiveLock alloc] init];
+        _semaphore = [GCDSemaphore semaphore];
         
         _isFirstTime = YES;
         _isActiveClose = NO;
@@ -243,24 +245,24 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 #pragma mark - 代理扩展 -
 - (NSDictionary *)getDelegateItems {
     NSDictionary* delegateItems = nil;
-    @synchronized (self) {
-       delegateItems = [_delegateItems copy];
-    }
+    [_semaphore wait];
+    delegateItems = [_delegateItems copy];
+    [_semaphore signal];
     return delegateItems;
 }
 
 - (NSString *)addDelegate:(id<MKWebSocketClientDelegate>)delegate {
     MKDelegateItem* delegateItem = [[MKDelegateItem alloc] initWithDelegate:delegate];
-    @synchronized (self) {
-        [self.delegateItems setValue:delegateItem forKey:delegateItem.delegateTag];
-    }
+    [_semaphore wait];
+    [self.delegateItems setValue:delegateItem forKey:delegateItem.delegateTag];
+    [_semaphore signal];
     return delegateItem.delegateTag;
 }
 
 - (void)removeDelegateWithTag:(NSString *)tag {
-    @synchronized (self) {
-        [self.delegateItems removeObjectForKey:tag];
-    }
+    [_semaphore wait];
+    [self.delegateItems removeObjectForKey:tag];
+    [_semaphore signal];
 }
 
 - (id)socketModule:(NSString *)cls {
@@ -332,10 +334,10 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
     self.socketState = SR_CLOSED;
-    /// 断开重连3次，重连失败再走下方代理
+    /// 断开重连，重连失败再走下方代理
     if (self.reConnectCount < MAX_REPEAT_CONNECT_NUMBER && self.reachabilityStatus ==AFNetworkReachabilityStatusReachableViaWWAN) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(REPEAT_CONNECT_INTERVAL * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //延后三秒重连
+            /// 延后重连，避免服务短时间无响应
             [self _open];
         });
         self.reConnectCount ++;
@@ -364,7 +366,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         /// 非主动断开，重新连接 （SRStatusCodeTryAgainLater、SRStatusCodeServiceRestart等状态）
         if (self.reachabilityStatus ==AFNetworkReachabilityStatusReachableViaWWAN) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(REPEAT_CONNECT_INTERVAL * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                //延后三秒重连
+                /// 延后重连
                 [self _open];
             });
         } else {
@@ -380,10 +382,14 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         self.pingMQ = 0; /// 归零，链路正常
         NSLog(@"接收到server返回的pong");
         
-        NSString* homeTime = [NSDate dateToString:[NSDate date] withDateFormat:@"HH:mm:ss"];
-        [self.pingDatas insertObject:[NSString stringWithFormat:@"%@: 接收到server返回的pong", homeTime] atIndex:0];
-        [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketPingNotification object:nil];
+        [self addWSLogInfo:@"接收到server返回的pong"];
     }
+}
+
+- (void)addWSLogInfo:(NSString *)logInfo {
+    NSString* homeTime = [NSDate dateToString:[NSDate date] withDateFormat:@"HH:mm:ss"];
+    [self.pingDatas insertObject:[NSString stringWithFormat:@"%@: %@", homeTime, logInfo] atIndex:0];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketPingNotification object:nil];
 }
 
 - (BOOL)webSocketShouldConvertTextFrameToString:(SRWebSocket *)webSocket {
