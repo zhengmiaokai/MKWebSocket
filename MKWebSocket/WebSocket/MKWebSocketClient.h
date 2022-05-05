@@ -30,7 +30,7 @@
 - (NSString *)addDelegate:(id<MKWebSocketClientDelegate>)delegate;
 - (void)removeDelegateWithTag:(NSString *)tag;
 
-#pragma mark - 模块化抽离（聊天、系统消息等） -
+#pragma mark - 模块化扩展（聊天、系统消息等） -
 - (id)socketModule:(NSString *)cls;
 - (void)removeSocketModule:(NSString*)cls;
 
