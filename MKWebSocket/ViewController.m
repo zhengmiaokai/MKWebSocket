@@ -22,8 +22,12 @@
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     
-    [SOCKET_MODULE(MKTestModule) addDelegate:self]; // 注册子模块
-    // [[MKWebSocketClient sharedInstance] addDelegate:self];
+    /* 添加子模块代理 */
+    [SOCKET_MODULE(MKTestModule) addDelegate:self];
+     
+     /* 添加主模块代理
+     [[MKWebSocketClient sharedInstance] addDelegate:self];
+     */
     
     _connectBtn.enabled = YES;
     _pingBtn.enabled = NO;
@@ -32,8 +36,12 @@
 }
 
 - (void)dealloc {
+    /* 移除子模块代理 */
     [SOCKET_MODULE(MKTestModule) removeDelegate:self];
-    // [[MKWebSocketClient sharedInstance] removeDelegate:self];
+    
+    /* 移除主模块代理
+     [[MKWebSocketClient sharedInstance] removeDelegate:self];
+     */
 }
 
 - (IBAction)connect:(UIButton *)sender {
