@@ -21,6 +21,7 @@
     self = [super init];
     if (self) {
         self.delegateItems = [[NSMutableDictionary alloc] init];
+        self.delegateOnMainQueue = YES;
     }
     return self;
 }
@@ -33,22 +34,33 @@
     return delegateItems;
 }
 
+- (void)enumerateDelegate:(void(^)(id <MKWebSocketClientDelegate> delegate))enumerateHandler {
+    [MKWebSocketUitls performOnMainThread:^{
+        NSDictionary* delegateItems = [self getDelegateItems];
+        [delegateItems enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, MKDelegateItem *delegateItem, BOOL * _Nonnull stop) {
+            if (enumerateHandler) {
+                enumerateHandler(delegateItem.delegate);
+            }
+        }];
+    } available:_delegateOnMainQueue];
+}
+
 - (void)addDelegate:(id<MKWebSocketClientDelegate>)delegate {
     @synchronized (self) {
         MKDelegateItem* delegateItem = [[MKDelegateItem alloc] initWithDelegate:delegate];
-        [self.delegateItems setValue:delegateItem forKey:[NSString stringWithFormat:@"%p",delegate]];
+        [self.delegateItems setValue:delegateItem forKey:delegateItem.delegateTag];
     }
 }
 
-- (void)removeDelegate:(id<MKWebSocketClientDelegate>)delegate {
+- (void)removeDelegate:(id <MKWebSocketClientDelegate>)delegate {
     @synchronized (self) {
-        [_delegateItems removeObjectForKey:[NSString stringWithFormat:@"%p",delegate]];
+        [_delegateItems removeObjectForKey:[MKWebSocketUitls generateTag:delegate]];
     }
 }
 
 #pragma mark -- MKWebSocketClientDelegate --
 - (void)webSocketClient:(id)webSocketClient didReceiveMessage:(id)message {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [MKWebSocketUitls performOnMainThread:^{
         NSDictionary* delegateItems = [self getDelegateItems];
         for (NSString* key in delegateItems) {
             MKDelegateItem* obj = [delegateItems objectForKey:key];
@@ -56,11 +68,11 @@
                 [obj.delegate webSocketClient:self didReceiveMessage:message];
             }
         }
-    });
+    } available:_delegateOnMainQueue];
 }
 
 - (void)webSocketClient:(id)webSocketClient didSendMessage:(id)message {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [MKWebSocketUitls performOnMainThread:^{
         NSDictionary* delegateItems = [self getDelegateItems];
         for (NSString* key in delegateItems) {
             MKDelegateItem* obj = [delegateItems objectForKey:key];
@@ -68,11 +80,11 @@
                 [obj.delegate webSocketClient:self didSendMessage:message];
             }
         }
-    });
+    } available:_delegateOnMainQueue];
 }
 
 - (void)webSocketClient:(id)webSocketClient didReciveStatusChanged:(MKWebSocketStatus)status {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [MKWebSocketUitls performOnMainThread:^{
         NSDictionary* delegateItems = [self getDelegateItems];
         for (NSString* key in delegateItems) {
             MKDelegateItem* obj = [delegateItems objectForKey:key];
@@ -80,7 +92,7 @@
                 [obj.delegate webSocketClient:self didReciveStatusChanged:status];
             }
         }
-    });
+    } available:_delegateOnMainQueue];
 }
 
 @end
