@@ -36,8 +36,17 @@ typedef NS_ENUM(NSInteger, MKWebSocketStatus) {
 @interface MKDelegateItem : NSObject
 
 @property (nonatomic, weak) id <MKWebSocketClientDelegate> delegate;
-@property (nonatomic, copy, readonly)  NSString* delegateTag;
+@property (nonatomic, copy, readonly) NSString* delegateTag;
 
 - (instancetype)initWithDelegate:(id<MKWebSocketClientDelegate>)delegate;
+
+@end
+
+
+@interface MKWebSocketUitls: NSObject
+
++ (NSString *)generateTag:(id <MKWebSocketClientDelegate>)delegate;
+
++ (void)performOnMainThread:(void(^)(void))block available:(BOOL)available;
 
 @end
