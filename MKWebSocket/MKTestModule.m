@@ -14,15 +14,12 @@
     NSDictionary* data = @{@"type": @"5"};
     NSString* type = [data objectForKey:@"type"];
     if (type.intValue == 7) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSDictionary* delegateItems = [self getDelegateItems];
-            for (NSString* key in delegateItems) {
-                MKDelegateItem* obj = [delegateItems objectForKey:key];
-                if ([obj.delegate respondsToSelector:@selector(refreshOrder:)]) {
-                    [(id <MKTestModuleProtocol>)obj.delegate refreshOrder:message];
-                }
+        [self enumerateDelegate:^(id<MKWebSocketClientDelegate> delegate) {
+            if ([delegate respondsToSelector:@selector(refreshOrder:)]) {
+                [(id <MKTestModuleProtocol>)delegate refreshOrder:message];
             }
-        });
+        }];
+        
     } else {
         [super webSocketClient:webSocketClient didReceiveMessage:message];
     }
