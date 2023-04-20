@@ -13,10 +13,11 @@
 
 @interface MKWebSocketBaseModule : NSObject <MKWebSocketClientDelegate>
 
-- (NSDictionary *)getDelegateItems;
+/// 遍历获取delegate
+- (void)enumerateDelegate:(void(^)(id <MKWebSocketClientDelegate> delegate))enumerateHandler;
+- (void)enumerateDelegate:(void(^)(id <MKWebSocketClientDelegate> delegate))enumerateHandler onMainThread:(BOOL)onMainThread;
 
 - (void)addDelegate:(id<MKWebSocketClientDelegate>)delegate;
-
 - (void)removeDelegate:(id<MKWebSocketClientDelegate>)delegate;
 
 @end
