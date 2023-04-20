@@ -21,9 +21,34 @@ NSString * const MKWebSocketPingNotification = @"webSocketPingNotification";
     self = [super init];
     if (self) {
         self.delegate = delegate;
-        _delegateTag = [NSString stringWithFormat: @"%p", delegate];
+        _delegateTag = [MKWebSocketUitls generateTag:delegate];
     }
     return self;
+}
+
+@end
+
+
+@implementation MKWebSocketUitls
+
++ (NSString *)generateTag:(id <MKWebSocketClientDelegate>)delegate {
+    return [NSString stringWithFormat:@"MKWebSockt-%p", delegate];
+}
+
++ (void)performOnMainThread:(void(^)(void))block available:(BOOL)available {
+    if (!block) return;
+    
+    if (!available) {
+        block();
+    } else {
+        if ([NSThread isMainThread]) {
+            block();
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                block();
+            });
+        }
+    }
 }
 
 @end
