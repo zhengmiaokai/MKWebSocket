@@ -77,7 +77,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         _isFirstTime = YES;
         _isActiveClose = NO;
         
-        _serailQueue = dispatch_queue_create("webSocketDispatchQueue", DISPATCH_QUEUE_SERIAL);
+        _serailQueue = dispatch_queue_create("com.webSocket.dispatchQueue", DISPATCH_QUEUE_SERIAL);
         
         [self upgradeNetworkStatus];
         
@@ -251,17 +251,16 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     return delegateItems;
 }
 
-- (NSString *)addDelegate:(id<MKWebSocketClientDelegate>)delegate {
+- (void)addDelegate:(id <MKWebSocketClientDelegate>)delegate {
     MKDelegateItem* delegateItem = [[MKDelegateItem alloc] initWithDelegate:delegate];
     [_semaphore wait];
     [self.delegateItems setValue:delegateItem forKey:delegateItem.delegateTag];
     [_semaphore signal];
-    return delegateItem.delegateTag;
 }
 
-- (void)removeDelegateWithTag:(NSString *)tag {
+- (void)removeDelegate:(id <MKWebSocketClientDelegate>)delegate {
     [_semaphore wait];
-    [self.delegateItems removeObjectForKey:tag];
+    [self.delegateItems removeObjectForKey:[MKWebSocketUitls generateTag:delegate]];
     [_semaphore signal];
 }
 
@@ -287,7 +286,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     
     [_lock lock];
     id module = [_modules objectForKey:cls];
-    [self removeDelegateWithTag:[NSString stringWithFormat:@"%p", module]];
+    [self removeDelegate:module];
     [_modules removeObjectForKey:cls];
     [_lock unlock];
 }
