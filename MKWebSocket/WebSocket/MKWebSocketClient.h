@@ -27,8 +27,8 @@
 - (void)sendData:(NSString *)data;
 - (void)sendMessage:(NSString *)data;
 
-- (NSString *)addDelegate:(id<MKWebSocketClientDelegate>)delegate;
-- (void)removeDelegateWithTag:(NSString *)tag;
+- (void)addDelegate:(id <MKWebSocketClientDelegate>)delegate;
+- (void)removeDelegate:(id <MKWebSocketClientDelegate>)delegate;
 
 #pragma mark - 模块化扩展（聊天、系统消息等） -
 - (id)socketModule:(NSString *)cls;
