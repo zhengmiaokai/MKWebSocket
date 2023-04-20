@@ -13,11 +13,13 @@
 
 @interface MKWebSocketBaseModule : NSObject <MKWebSocketClientDelegate>
 
+/// 是否在主线程回调（default：YES）
+@property (nonatomic, assign) BOOL delegateOnMainQueue;
+
 /// 遍历获取delegate
 - (void)enumerateDelegate:(void(^)(id <MKWebSocketClientDelegate> delegate))enumerateHandler;
-- (void)enumerateDelegate:(void(^)(id <MKWebSocketClientDelegate> delegate))enumerateHandler onMainThread:(BOOL)onMainThread;
 
-- (void)addDelegate:(id<MKWebSocketClientDelegate>)delegate;
-- (void)removeDelegate:(id<MKWebSocketClientDelegate>)delegate;
+- (void)addDelegate:(id <MKWebSocketClientDelegate>)delegate;
+- (void)removeDelegate:(id <MKWebSocketClientDelegate>)delegate;
 
 @end
