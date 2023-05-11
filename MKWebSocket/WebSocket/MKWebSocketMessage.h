@@ -7,10 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MKWMesssagePackage.h"
 
 @interface MKWebSocketMessage : NSObject
 
+/// 原始数据
 @property (nonatomic, strong) id message;
+
+/// 消息模型
+@property (nonatomic, strong) MKWReceivePackage *model;
 
 + (instancetype)modelWithMessage:(id)message;
 

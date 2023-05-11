@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		915A7F9F2A0D54C200A46762 /* NSObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 915A7F9D2A0D54C200A46762 /* NSObject+Additions.m */; };
+		915A7FA22A0D54E600A46762 /* MKWMesssagePackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 915A7FA12A0D54E600A46762 /* MKWMesssagePackage.m */; };
 		9569B6E9269C94B0008E312D /* MKTestModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9569B6E8269C94B0008E312D /* MKTestModule.m */; };
 		B69CE13D0289246907917672 /* libPods-MKWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */; };
 		D5CF012F26C51B6D0037CEF8 /* MKWSPingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D5CF012D26C51B6D0037CEF8 /* MKWSPingVC.m */; };
@@ -32,6 +34,10 @@
 /* Begin PBXFileReference section */
 		0FEF992233C6F385B5563E6A /* Pods-MKWebSocket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKWebSocket.release.xcconfig"; path = "Target Support Files/Pods-MKWebSocket/Pods-MKWebSocket.release.xcconfig"; sourceTree = "<group>"; };
 		27A334CB4AEF3ED9B6991D4B /* Pods-MKWebSocket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKWebSocket.debug.xcconfig"; path = "Target Support Files/Pods-MKWebSocket/Pods-MKWebSocket.debug.xcconfig"; sourceTree = "<group>"; };
+		915A7F9D2A0D54C200A46762 /* NSObject+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Additions.m"; sourceTree = "<group>"; };
+		915A7F9E2A0D54C200A46762 /* NSObject+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Additions.h"; sourceTree = "<group>"; };
+		915A7FA02A0D54E600A46762 /* MKWMesssagePackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKWMesssagePackage.h; sourceTree = "<group>"; };
+		915A7FA12A0D54E600A46762 /* MKWMesssagePackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWMesssagePackage.m; sourceTree = "<group>"; };
 		9569B6E7269C94B0008E312D /* MKTestModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKTestModule.h; sourceTree = "<group>"; };
 		9569B6E8269C94B0008E312D /* MKTestModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKTestModule.m; sourceTree = "<group>"; };
 		B6A52B99EADD0D643E31E169 /* libPods-MKWebSocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MKWebSocket.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +102,8 @@
 			children = (
 				D5CF013226C51C8B0037CEF8 /* NSDate+Additions.h */,
 				D5CF013326C51C8B0037CEF8 /* NSDate+Additions.m */,
+				915A7F9E2A0D54C200A46762 /* NSObject+Additions.h */,
+				915A7F9D2A0D54C200A46762 /* NSObject+Additions.m */,
 			);
 			path = Catogery;
 			sourceTree = "<group>";
@@ -149,6 +157,8 @@
 				D5D605DB2692C37A0006082F /* MKWebSocketClient.m */,
 				D5D605D82692C37A0006082F /* MKWebSocktDelegate.h */,
 				D5D605DC2692C37A0006082F /* MKWebSocktDelegate.m */,
+				915A7FA02A0D54E600A46762 /* MKWMesssagePackage.h */,
+				915A7FA12A0D54E600A46762 /* MKWMesssagePackage.m */,
 				D5D605DA2692C37A0006082F /* MKWebSocketMessage.h */,
 				D5D605DE2692C37A0006082F /* MKWebSocketMessage.m */,
 				D5D605D72692C37A0006082F /* MKWebSocketBaseModule.h */,
@@ -281,7 +291,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5CF013426C51C8B0037CEF8 /* NSDate+Additions.m in Sources */,
+				915A7F9F2A0D54C200A46762 /* NSObject+Additions.m in Sources */,
 				D5D605C12692B6AD0006082F /* ViewController.m in Sources */,
+				915A7FA22A0D54E600A46762 /* MKWMesssagePackage.m in Sources */,
 				D5D605DF2692C37A0006082F /* MKWebSocketClient.m in Sources */,
 				D5D605BB2692B6AD0006082F /* AppDelegate.m in Sources */,
 				D5D605E22692C37A0006082F /* MKWebSocketMessage.m in Sources */,

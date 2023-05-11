@@ -8,6 +8,7 @@
 #import "ViewController.h"
 #import "MKWebSocketClient.h"
 #import "MKWebSocketMessage.h"
+#import "MKWMesssagePackage.h"
 #import "MKTestModule.h"
 #import "MKWSPingVC.h"
 
@@ -33,6 +34,10 @@
     _pingBtn.enabled = NO;
     _sendBtn.enabled = NO;
     _closeBtn.enabled = NO;
+    
+    // 模拟回包数据
+    NSString *ackPackage = [MKWSendPackage ackWithPayload:@{@"msgId": @"8569745369215698"}];
+    NSLog(@"ack_package: %@", ackPackage);
 }
 
 - (void)dealloc {
