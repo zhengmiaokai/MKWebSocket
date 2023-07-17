@@ -25,10 +25,7 @@
 		D5D605E12692C37A0006082F /* MKWebSocketBaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605DD2692C37A0006082F /* MKWebSocketBaseModule.m */; };
 		D5D605E22692C37A0006082F /* MKWebSocketMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605DE2692C37A0006082F /* MKWebSocketMessage.m */; };
 		D5D605F12692C4760006082F /* GCDSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605E82692C4760006082F /* GCDSource.m */; };
-		D5D605F22692C4760006082F /* GCDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605E92692C4760006082F /* GCDQueue.m */; };
-		D5D605F32692C4760006082F /* GCDGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605EA2692C4760006082F /* GCDGroup.m */; };
 		D5D605F42692C4760006082F /* GCDSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605EC2692C4760006082F /* GCDSemaphore.m */; };
-		D5D605F52692C4760006082F /* GCDLock.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D605EF2692C4760006082F /* GCDLock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,16 +62,10 @@
 		D5D605DD2692C37A0006082F /* MKWebSocketBaseModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebSocketBaseModule.m; sourceTree = "<group>"; };
 		D5D605DE2692C37A0006082F /* MKWebSocketMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKWebSocketMessage.m; sourceTree = "<group>"; };
 		D5D605E62692C4760006082F /* GCDSemaphore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDSemaphore.h; sourceTree = "<group>"; };
-		D5D605E72692C4760006082F /* GCDLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDLock.h; sourceTree = "<group>"; };
 		D5D605E82692C4760006082F /* GCDSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDSource.m; sourceTree = "<group>"; };
-		D5D605E92692C4760006082F /* GCDQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDQueue.m; sourceTree = "<group>"; };
-		D5D605EA2692C4760006082F /* GCDGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDGroup.m; sourceTree = "<group>"; };
 		D5D605EB2692C4760006082F /* GCDConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDConstant.h; sourceTree = "<group>"; };
 		D5D605EC2692C4760006082F /* GCDSemaphore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDSemaphore.m; sourceTree = "<group>"; };
-		D5D605ED2692C4760006082F /* GCDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDQueue.h; sourceTree = "<group>"; };
 		D5D605EE2692C4760006082F /* GCDSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDSource.h; sourceTree = "<group>"; };
-		D5D605EF2692C4760006082F /* GCDLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDLock.m; sourceTree = "<group>"; };
-		D5D605F02692C4760006082F /* GCDGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDGroup.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,16 +162,10 @@
 			isa = PBXGroup;
 			children = (
 				D5D605EB2692C4760006082F /* GCDConstant.h */,
-				D5D605F02692C4760006082F /* GCDGroup.h */,
-				D5D605EA2692C4760006082F /* GCDGroup.m */,
-				D5D605E72692C4760006082F /* GCDLock.h */,
-				D5D605EF2692C4760006082F /* GCDLock.m */,
-				D5D605ED2692C4760006082F /* GCDQueue.h */,
-				D5D605E92692C4760006082F /* GCDQueue.m */,
-				D5D605E62692C4760006082F /* GCDSemaphore.h */,
-				D5D605EC2692C4760006082F /* GCDSemaphore.m */,
 				D5D605EE2692C4760006082F /* GCDSource.h */,
 				D5D605E82692C4760006082F /* GCDSource.m */,
+				D5D605E62692C4760006082F /* GCDSemaphore.h */,
+				D5D605EC2692C4760006082F /* GCDSemaphore.m */,
 			);
 			path = GCDObjc;
 			sourceTree = "<group>";
@@ -297,13 +282,10 @@
 				D5D605DF2692C37A0006082F /* MKWebSocketClient.m in Sources */,
 				D5D605BB2692B6AD0006082F /* AppDelegate.m in Sources */,
 				D5D605E22692C37A0006082F /* MKWebSocketMessage.m in Sources */,
-				D5D605F22692C4760006082F /* GCDQueue.m in Sources */,
 				D5D605CC2692B6B50006082F /* main.m in Sources */,
 				D5D605E12692C37A0006082F /* MKWebSocketBaseModule.m in Sources */,
 				D5CF012F26C51B6D0037CEF8 /* MKWSPingVC.m in Sources */,
 				9569B6E9269C94B0008E312D /* MKTestModule.m in Sources */,
-				D5D605F32692C4760006082F /* GCDGroup.m in Sources */,
-				D5D605F52692C4760006082F /* GCDLock.m in Sources */,
 				D5D605F12692C4760006082F /* GCDSource.m in Sources */,
 				D5D605E02692C37A0006082F /* MKWebSocktDelegate.m in Sources */,
 				D5D605F42692C4760006082F /* GCDSemaphore.m in Sources */,

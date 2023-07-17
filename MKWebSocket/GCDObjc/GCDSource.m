@@ -2,19 +2,19 @@
 //  GCDSource.m
 //  Basic
 //
-//  Created by mikazheng on 2019/7/19.
+//  Created by zhengmiaokai on 2019/7/19.
 //  Copyright © 2019 zhengmiaokai. All rights reserved.
 //
 
 #import "GCDSource.h"
 
 @interface GCDSource () {
-    BOOL _repeats;
     NSTimeInterval _timeInterval;
+    BOOL _immediately; // 是否马上开始
     BOOL _isSuspend; // 是否挂起
     NSRecursiveLock* _lock;
 }
-
+@property (nonatomic, assign) BOOL repeats;
 @property (nonatomic, strong) dispatch_source_t timer;
 
 @property (nonatomic, strong) dispatch_queue_t timerQueue;
@@ -26,12 +26,12 @@
 
 @implementation GCDSource
 
-- (instancetype)initWithTimeInterval:(NSTimeInterval)timeInterval repeats:(BOOL)repeats timerBlock:(void(^)(void))timerBlock timerQueue:(dispatch_queue_t)timerQueue blockQueue:(dispatch_queue_t)blockQueue {
+- (instancetype)initWithTimeInterval:(NSTimeInterval)timeInterval repeats:(BOOL)repeats timerBlock:(void(^)(void))timerBlock timerQueue:(dispatch_queue_t)timerQueue blockQueue:(dispatch_queue_t)blockQueue immediately:(BOOL)immediately {
     self = [super init];
     if (self) {
         _timeInterval = timeInterval;
-        _repeats = repeats;
-        
+        _immediately = immediately;
+        self.repeats = repeats;
         self.timerBlock = timerBlock;
         self.timerQueue = timerQueue;
         self.blockQueue = blockQueue;
@@ -42,9 +42,14 @@
 }
 
 - (instancetype)initWithTimeInterval:(NSTimeInterval)timeInterval repeats:(BOOL)repeats timerBlock:(void(^)(void))timerBlock {
+    return [self initWithTimeInterval:timeInterval repeats:repeats timerBlock:timerBlock immediately:NO];
+}
+
+- (instancetype)initWithTimeInterval:(NSTimeInterval)timeInterval repeats:(BOOL)repeats timerBlock:(void(^)(void))timerBlock immediately:(BOOL)immediately {
     self = [super init];
     if (self) {
         _timeInterval = timeInterval;
+        _immediately = immediately;
         _repeats = repeats;
         self.timerBlock = timerBlock;
         
@@ -58,16 +63,20 @@
     dispatch_queue_t blockQueue = self.blockQueue ? self.blockQueue : dispatch_get_main_queue();
     
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, timerQueue);
+    _lock = [[NSRecursiveLock alloc] init];
     
-    __weak typeof(self) weakSelf = self;
-    dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), _timeInterval * NSEC_PER_SEC,  0);
+    /*
+     参数二：定时器开始时间，设置为“_timeInterval * NSEC_PER_SEC”，”当前时间 + _timeInterval“ 开始
+     参数三：定时器间隔时长
+     */
+    NSTimeInterval walltime = (_immediately == YES ? 0 : _timeInterval);
+    dispatch_source_set_timer(_timer, dispatch_walltime(NULL, walltime * NSEC_PER_SEC), _timeInterval * NSEC_PER_SEC,  0);
     dispatch_source_set_event_handler(_timer, ^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
         dispatch_async(blockQueue, ^{
-            strongSelf.timerBlock();
+            self.timerBlock();
         });
-        if (strongSelf->_repeats == NO) {
-            [strongSelf stopTimer];
+        if (self.repeats == NO) {
+            [self stopTimer];
         }
     });
     dispatch_resume(_timer);

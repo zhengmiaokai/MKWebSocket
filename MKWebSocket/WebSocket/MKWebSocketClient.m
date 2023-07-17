@@ -7,10 +7,10 @@
 //
 
 #import "MKWebSocketClient.h"
-#import "MKWebSocketMessage.h"
-#import "GCDConstant.h"
-#import "NSDate+Additions.h"
 #import <AFNetworking/AFNetworking.h>
+#import "NSDate+Additions.h"
+#import "GCDConstant.h"
+#import "MKWebSocketMessage.h"
 
 /* websocket在线测试：http://coolaf.com/tool/chattest */
 static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchattest";
