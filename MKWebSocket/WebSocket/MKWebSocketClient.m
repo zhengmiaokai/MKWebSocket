@@ -26,20 +26,21 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     GCDSemaphore* _semaphore;
     NSMutableDictionary* _modules;
     
-    BOOL _isFirstTime;   /// 是否为首次连接
-    BOOL _isActiveClose; /// 是否为主动关闭
+    BOOL _isFirstTime;   // 是否为首次连接
+    BOOL _isActiveClose; // 是否为主动关闭
 }
 
-@property (nonatomic, strong) GCDSource* conntectTimer; /// 链接心跳定时
-@property (nonatomic, strong) GCDSource* pingTimer; /// ping心跳定时
+@property (nonatomic, strong) GCDSource* conntectTimer; // 链接心跳定时
+@property (nonatomic, strong) GCDSource* pingTimer; // ping心跳定时
 @property (nonatomic, strong) SRWebSocket* webSocket;
 
 @property (nonatomic, strong) NSMutableDictionary* delegateItems;
 
-@property (nonatomic, assign) NSUInteger reConnectCount; /// 已重连次数
-@property (nonatomic, assign) NSUInteger pingMQ; /// 没有被消费的心跳MQ （ping: +1, pong: -1）
+@property (nonatomic, assign) BOOL isConnecting; // 正在连接-状态标记
+@property (nonatomic, assign) NSUInteger reConnectCount; // 已重连次数
+@property (nonatomic, assign) NSUInteger pingMQ; // 没有被消费的心跳MQ （ping: +1, pong: -1）
 
-@property (nonatomic, assign) AFNetworkReachabilityStatus reachabilityStatus; /// 网络状态
+@property (nonatomic, assign) AFNetworkReachabilityStatus reachabilityStatus; // 网络状态
 
 @end
 
@@ -63,6 +64,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     if (self) {
         _pingDatas = [[NSMutableArray alloc] init];
         
+        self.isConnecting = NO;
         self.reConnectCount = 0;
         self.delegateItems = [[NSMutableDictionary alloc] init];
         
@@ -126,10 +128,10 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 /// 销毁socket
-- (void)destroySocket:(BOOL)isClose {
+- (void)destroySocket:(BOOL)isClosed {
     if (_webSocket) {
         _webSocket.delegate = nil;
-        if (!isClose) {
+        if (!isClosed) {
             [_webSocket close];
         }
         self.webSocket = nil;
@@ -168,7 +170,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 }
 
 - (void)reConnect {
-    if (_webSocket.readyState == SR_OPEN || _webSocket.readyState == SR_CONNECTING) {
+    if (_webSocket.readyState == SR_OPEN || _isConnecting == YES) {
         NSLog(@"webSocket is open or connecting");
     } else {
         if (_isFirstTime == NO && _isActiveClose == NO) {
@@ -180,15 +182,16 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 - (void)disconnect {
     _isActiveClose = YES;
     
-    [self.webSocket close];
+    [_webSocket close];
     [self destroyConntectTimer];
 }
 
-/// 连接（重连前先 销毁已有的websocket）
+// 连接（重连前先 销毁已有的websocket）
 - (void)_open {
     [self destroySocket:_webSocket.readyState == SR_CLOSED];
     [self destroyPingTimer];
     
+    self.isConnecting = YES;
     [self didReciveStatusChanged:MKWebSocketStatusConnecting];
     [self.webSocket open];
 }
@@ -196,22 +199,14 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
 #pragma mark - sendData -
 - (void)sendMessage:(NSString *)data {
     if (_webSocket.readyState == SR_OPEN) {
-        [self.webSocket send:data];
-        
-        MKWebSocketMessage* messageItem = [MKWebSocketMessage modelWithMessage:data];
-        NSDictionary* delegateItems = [self getDelegateItems];
-        for (NSString* key in delegateItems) {
-            MKDelegateItem* obj = [delegateItems objectForKey:key];
-            if ([obj.delegate respondsToSelector:@selector(webSocketClient:didSendMessage:)]) {
-                [obj.delegate webSocketClient:self didSendMessage:messageItem];
-            }
-        }
+        [_webSocket send:data];
+        [self didSendMessage:data];
     }
 }
 
 - (void)sendData:(NSString *)data {
     if (_webSocket.readyState == SR_OPEN) {
-        [self.webSocket send:data];
+        [_webSocket send:data];
     }
 }
 
@@ -226,7 +221,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
         if (!data) {
             data = [@"SocketTag" dataUsingEncoding:NSASCIIStringEncoding];
         }
-        [self.webSocket sendPing:data];
+        [_webSocket sendPing:data];
         self.pingMQ++;
     }
 }
@@ -280,6 +275,17 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     [_lock unlock];
 }
 
+- (void)didSendMessage:(NSString *)data {
+    MKWebSocketMessage* messageItem = [MKWebSocketMessage modelWithMessage:data];
+    NSDictionary* delegateItems = [self getDelegateItems];
+    for (NSString* key in delegateItems) {
+        MKDelegateItem* obj = [delegateItems objectForKey:key];
+        if ([obj.delegate respondsToSelector:@selector(webSocketClient:didSendMessage:)]) {
+            [obj.delegate webSocketClient:self didSendMessage:messageItem];
+        }
+    }
+}
+
 - (void)didReciveStatusChanged:(MKWebSocketStatus)status {
     NSDictionary* delegateItems = [self getDelegateItems];
     for (NSString* key in delegateItems) {
@@ -290,9 +296,7 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     }
 }
 
-#pragma mark -- MKWebSocketDelegate --
-/* 基础代码处理 */
-- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
+- (void)didReceiveMessage:(id)message {
     MKWebSocketMessage* messageItem = [MKWebSocketMessage modelWithMessage:message];
     NSDictionary* delegateItems = [self getDelegateItems];
     for (NSString* key in delegateItems) {
@@ -304,58 +308,66 @@ static NSString * const kWebSocketURLString = @"ws://82.157.123.54:9010/ajaxchat
     [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketDidReciveNotification object:messageItem];
 }
 
+#pragma mark -- MKWebSocketDelegate --
+- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
+    [self didReceiveMessage:message];
+}
+
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
+    self.isConnecting = NO;
     self.reConnectCount = 0;
     
-    /// ping心跳包，防止服务端杀死
+    // ping心跳包，防止服务端杀死
     __weak typeof(self) weakSelf = self;
     self.pingTimer = [[GCDSource alloc] initWithTimeInterval:SOCKET_PING_TIME_INTERVAL repeats:YES timerBlock:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf sendPing:nil];
     }];
     
-    /// 登录标记（临时）
+    // 状态更新
     [self didReciveStatusChanged:MKWebSocketStatusOpen];
     [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketDidOpenNotification object:nil];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
-    /// 断开重连，重连失败再走下方代理
+    self.isConnecting = NO;
+    
+    // 断开重连，重连失败再走下方代理
     if (self.reConnectCount < MAX_REPEAT_CONNECT_NUMBER && self.reachabilityStatus ==AFNetworkReachabilityStatusReachableViaWWAN) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(REPEAT_CONNECT_INTERVAL * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            /// 延后重连，避免服务短时间无响应
+            // 延后重连，避免服务短时间无响应
             [self _open];
         });
         self.reConnectCount ++;
     } else {
-        [self didReciveStatusChanged:MKWebSocketStatusClose];
-        self.reConnectCount = 0;
-        
-        [self destroySocket:_webSocket.readyState == SR_CLOSED];
+        [self destroySocket:webSocket.readyState == SR_CLOSED];
         [self destroyPingTimer];
         
+        self.reConnectCount = 0;
+        [self didReciveStatusChanged:MKWebSocketStatusClose];
         [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketDidFailNotification object:error];
     }
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
+    self.isConnecting = NO;
     [self didReciveStatusChanged:MKWebSocketStatusClose];
     
     if (code == SRStatusCodeGoingAway || code == SRStatusCodeNormal) {
-        /// 主动断开后销毁 Socket & Timer
-        [self destroySocket:_webSocket.readyState == SR_CLOSED];
+        // 主动断开后销毁 Socket & Timer
+        [self destroySocket:webSocket.readyState == SR_CLOSED];
         [self destroyPingTimer];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:MKWebSocketDidCloseNotification object:@{@"code": @(code), @"reason": (reason?reason:@"")}];
     } else {
-        /// 非主动断开，重新连接 （SRStatusCodeTryAgainLater、SRStatusCodeServiceRestart等状态）
+        // 非主动断开，重新连接 （SRStatusCodeTryAgainLater、SRStatusCodeServiceRestart等状态）
         if (self.reachabilityStatus ==AFNetworkReachabilityStatusReachableViaWWAN) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(REPEAT_CONNECT_INTERVAL * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                /// 延后重连
+                // 延后重连
                 [self _open];
             });
         } else {
-            [self destroySocket:_webSocket.readyState == SR_CLOSED];
+            [self destroySocket:webSocket.readyState == SR_CLOSED];
             [self destroyPingTimer];
         }
     }
